@@ -1,0 +1,277 @@
+/* Code CSS du Projet MP2 */
+
+* {
+	margin:0;
+	padding:0;
+	font-family:"Light_police","sans-serif";
+}
+
+body{
+	background-image:url("../images/background.png");
+	background-repeat:repeat;
+}
+
+nav
+{
+	position:relative;
+	display:block;
+	width:100%;
+	height:60px;
+}
+
+#titre_page
+{
+	text-align:center;
+	padding-top:15px;
+	right:0;
+	font-family:"Light_police","sans-serif";
+
+}
+
+select
+{
+	margin:15px;
+}
+
+p
+{
+	margin-left: 15px;
+}
+section
+{
+	position:absolute;
+	display:block;
+	background-color:#ccc;
+	width:92%;
+	top:8%;
+	left:4%;
+	right:0 auto;
+	height: 84%;
+	overflow: auto;
+
+}
+
+#info_tournee
+{
+	display:inline-block;
+	width:30%;
+	height:88%;
+	float:left;
+	margin:2%;
+	background-color:#EEE;
+	overflow:auto;
+}
+
+#map_canvas
+{
+	display:inline-block;
+	float:right;
+	width:60%;
+	margin:2%;
+	background-color:#FFF;
+	height:88%;
+}
+
+
+@font-face{
+    font-family : "Light_police";
+    src : url('../fonts/Light_police.ttf');
+}
+
+/* ----------------------------------------*/
+/* 				Menu principal			   */
+/* ----------------------------------------*/
+
+
+
+/* Enlève les puces de la liste */
+.menu {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position:static;
+}
+
+/* Positionner cette liste horizontalement */
+.li_menu {
+	display:inline-block;
+	float: left;
+	margin-right: 1px;
+}
+
+/* Style des liens */
+.li_menu a {
+	display:block;
+	min-width:130px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	font-family:"Light_police","Arial","sans-serif";
+	font-size:0.85em;
+	color: #fff;
+	background-color:#5A8EFF;
+	text-decoration: none;
+}
+
+/* Liens au survol */
+.li_menu:hover a {
+	background-color:#2E5CE8;
+	
+}
+
+/* */
+.li_menu:hover ul a {
+	background-color:#2E5CE8;
+	color: #2f3036;
+	height: 40px;
+	line-height: 40px;
+}
+
+/* Disposition des imbriquements (en options) */
+ul .li_menu a:hover + .hidden, .hidden:hover {
+	display: block;
+}
+
+
+
+/* Style du menu lorsque la taille < 805px */
+.show-menu {
+	font-family:"Light_police","sans-serif";
+	text-decoration: none;
+	color: #fff;
+	background-color:#5A8EFF;
+	text-align: center;
+	padding: 10px 0;
+	display: none;
+}
+
+/* Menu déroulant caché */
+input[type=checkbox]{
+    display: none;
+}
+
+/* Evènement lié au cochage du menu > Action de déroulement */
+input[type=checkbox]:checked ~ #menu{
+    display: block;
+}
+
+
+@media screen and (max-width : 805px){
+	/* Repositionnement de la liste */
+	ul {
+		position: relative;
+		display:none;
+		z-index:100;
+	}
+	/* Espacement verticale */
+	.li_menu {
+		margin-bottom: 0.4px;
+		z-index:100;
+	}
+	/* Met les liens en taille plein ecran (largeur 100%) */
+	ul .li_menu, .li_menu a {
+		width: 100%;
+		z-index:100;
+	}
+	/* Lien du menu en responsive */
+	.show-menu {
+		display:block;
+		z-index:100;
+	}
+
+
+}
+
+
+/* ----------------------------------- */
+/* /!\ Partie à Matthieu :  Danger /!\ */
+/* ----------------------------------- */
+.formulaire{
+	padding:25px;
+}
+
+.Vehicle{
+	padding: 5px;
+}
+.Depot{
+	padding: 5px;
+}
+
+.Client{
+	padding: 5px;
+}
+
+.Contrainte{
+	padding: 5px;
+}
+
+a{
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+
+
+input 
+{
+
+	width:100px;
+	margin-right:2px;
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid #5A8EFF;
+	background:transparent;
+}
+
+label
+{
+	/*color: white;
+	background-color: #5A8EFF;*/
+	
+	padding:5px 10px;
+}
+
+input:focus
+{
+	border-bottom: 2px solid #2E5CE8;
+}
+
+input:hover
+{
+	border-bottom: 2px solid #2E5CE8;
+}
+
+h2
+{
+	margin-top:20px;
+}
+
+
+.boutonEnvoyer{
+	color: white;
+  	background-color:#5A8EFF;
+  	font-weight: bold;
+  	float:right;
+	border:none;
+	padding: 10px;
+	margin-bottom:20px;
+	margin-left:20px;
+}
+
+.boutonEnvoyer:hover{
+	background-color:#2E5CE8;
+	color: white;
+}
+
+
+
+
+
+
+
+
+
+
+

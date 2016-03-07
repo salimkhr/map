@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+    <!-- En-Tete de la page -->
+    <head>
+        <meta charset="utf-8" />
+        <!-- Titre -->
+        <title>VRP Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- CSS (liens) -->
+        <link rel="stylesheet" href="./css/css_complet.css" type="text/css" media="screen" />
+        <!-- Icones de navigateur -->
+        <link rel="icon" type="image/png" href="./images/icone_bleue.png"/>
+        <!-- Mise en place des Scripts (Objets,API Google Map,jQuery) -->
+        <script type='text/javascript' src='./js/Client.js'></script>
+        <script src="js/jquery-2.1.3.min.js"></script>
+        <script src="js/fonctions.js"></script>
+
+    </head>
+    <!-- Corps de la page -->
+    <body>
+		<nav>
+          <h1 id="titre_page">VRP XML (Projet MP2)</h1>
+      </nav>
+      <section>
+       <form id="myForm" class="formulaire" method="post" action="map.php">
+           <h2>Véhicule : </h2>
+		<div class="Vehicle" id="Vehicle1">
+             <label>Véhicule 1 : </label>
+             <label for="VehicleCapacity1">Capacité : </label><input id="capacity1" name="VehicleCapacity1" type="number" value="" min="0" required />
+             <label for="VehicleSpeed1">Vitesse : </label><input id="speed1" name="VehicleSpeed1" type="number" value="" min="0" required/>
+             <label for="VehicleFixCost1">Coût Fixe : </label><input id="fixcost1" name="VehicleFixCost1" type="number" value="" min="0" required/>
+             <label for="VehicleVarCost1">Coût Variable : </label><input id="varcost1" name="VehicleVarCost1" type="number" value="" min="0" required/>
+          </div>
+         <a id="addVehicle" href="#">Ajouter</a> <a href="#" id="delVehicle">Supprimer</a>
+	<h2>Dépôt:</h2>
+          <div class="Depot" id="Depot1">
+             <label>Dépôt 1 : </label>
+             <label for="Adress1">Ville : </label><input id="DepotAdress1" name="DepotAdress1" type="text" value="" />
+             <!--<label for="x1">X : </label><input id="DepotX1" name="DepotX1" type="text" value=""/>
+             <label for="y1">Y : </label><input id="DepotY1" name="DepotY1" type="text" value=""/>-->
+          </div>
+          <a id="addDepot" href="#">Ajouter</a> <a href="#" id="delDepot">Supprimer</a>
+	
+	<h2>Client:</h2>
+          <div class="Client" id="Client1">
+             <label>Client 1 : </label>
+             <label for="Adress1">Ville : </label><input id="ClientAdress1" name="ClientAdress1" type="text" value="" />
+             <!--<label for="x1">X : </label><input id="ClientX1" name="ClientX1" type="text" value=""/>
+             <label for="y1">Y : </label><input id="ClientY1" name="ClientY1" type="text" value=""/>-->
+             <label for="Demand1">Demande : </label><input id="ClientDemand1" name="ClientDemand1" type="text" value="" required />
+             <label for="TimeWindowMin1">Heure de livraison minimum : </label><input  id="ClientTimeWindowMin1" name="ClientTimeWindowMin1" type="time" value="" required />
+             <label class="paddingTWMax" for="TimeWindowMax1">Heure de livraison maximum : </label><input id="ClientTimeWindowMax1" name="ClientTimeWindowMax1" type="time" value="" required />
+          </div>
+           <a id="addClient" href="#">Ajouter</a> <a href="#" id="delClient">Supprimer</a>
+	<h2>Contrainte:</h2>
+           <div class="Contrainte">
+             <label for="MaxTripDuration1">Temps maximum de la tournée : </label><input id="maxTripDuration" name="MaxTripDuration" type="number" value="" min="0" required /> 
+             <label for="MaxTripWithoutRestDuration1">Temps maximum de la tournée sans repos : </label><input id="maxTripWithoutRestDuration" name="MaxTripWithoutRestDuration" type="number" value="" min="0" required />            
+          </div>
+
+          <input type="submit" class="boutonEnvoyer" value="Envoyer"  />
+          <input type="reset" class="boutonEnvoyer" value="Réinitialiser" />
+       </form>       
+      
+       <script type="text/javascript">
+		jQuery(document).ready(function ()
+		{	var vehicule = 1;
+			var depot = 1;
+			var client = 1;
+			
+			console.log();
+			
+          $("#addVehicle").click(function(){add("Vehicle")});
+          $("#addDepot").click(function(){add("Depot")});
+          $("#addClient").click(function(){add("Client")});
+
+        
+          function add(ligne) {
+
+             ligneCount = document.getElementsByClassName(ligne).length;
+             ligneTemp = document.getElementsByClassName(ligne)[ligneCount-1];
+             ligneClone = ligneTemp.cloneNode(true);
+
+              ligneClone.id=ligne+ligneCount;
+
+             for (i=0; i<ligneClone.getElementsByTagName("input").length; i++) 
+             {             
+                ligneClone.id=ligne+(ligneCount+1);
+                ligneClone.getElementsByTagName("input")[i].id=ligneClone.getElementsByTagName("input")[i].id.replace(ligneCount,ligneCount+1);
+                ligneClone.getElementsByTagName("input")[i].name=ligneClone.getElementsByTagName("input")[i].name.replace(ligneCount,ligneCount+1);
+                ligneClone.getElementsByTagName("input")[i].value="";
+                ligneClone.getElementsByTagName("label")[i].htmlFor=ligneClone.getElementsByTagName("label")[i].htmlFor.replace(ligneCount,ligneCount+1);
+                ligneClone.getElementsByTagName("label")[i].innerHTML=ligneClone.getElementsByTagName("label")[i].innerHTML.replace(ligneCount,ligneCount+1);
+             }   
+             document.getElementById("myForm").insertBefore(ligneClone,document.getElementById("add"+ligne));//
+
+              $("#del"+ligne).unbind( "click" );
+              $("#del"+ligne).click(function(){del(ligne);});      
+
+			switch (ligne) {
+				case "Vehicle" :
+					vehicule++;
+					break;
+				case "Depot" :
+					depot++;
+					break;
+				case "Client" :
+					client++;
+					break;
+				default :
+					break;
+			}
+          }
+		  
+          function del(ligne) {
+			 
+			 
+			switch (ligne) {
+				case "Vehicle" :
+					id = vehicule;
+					break;
+				case "Depot" :
+					id = depot;
+					break;
+				case "Client" :
+					id = client;
+					break;
+				default :
+					break;
+			}
+			
+              console.log(ligne+id);
+
+              var fieldset = document.getElementById(ligne+id);
+              
+              console.log(fieldset);
+
+              document.getElementById("myForm").removeChild(fieldset);
+                
+              $("#del"+ligne).unbind( "click" );
+                
+                if(id > 2) {
+                  $("#del"+ligne).click(function(){del(ligne);});
+				}
+
+			  switch (ligne) {
+				case "Vehicle" :
+					vehicule--;
+					break;
+				case "Depot" :
+					depot--;
+					break;
+				case "Client" :
+					client--;
+					break;
+				default :
+					break;
+			}
+          }
+		  
+		 $("#myForm").submit(function(event) {
+			 //Tests
+			 var erreur = 0;
+			 //Tests véhicules
+			 for (var i = 1; i <= vehicule; i++) {
+				if ($('#capacity' + i).val() <= 0) {
+					erreur++;
+					$('#capacity' + i).css("border-bottom","2px solid red");
+					alert("erreur capacité");
+				}
+				if ($("#speed" + i).val() <= 0) {
+					erreur++;
+					('#speed' + i).css("border-bottom","2px solid red");
+					alert("erreur vitesse");
+				}
+				if ($("#fixCost" + i).val() < 0) {
+					erreur++;
+					('#fixCost' + i).css("border-bottom","2px solid red");
+					alert("erreur coût fixe");
+				}
+				if ($("#varCost" + i).val() < 0) {
+					erreur++;
+					('#varCost' + i).css("border-bottom","2px solid red");
+					alert("erreur coût variable");
+				}
+			 }
+			 
+			 //Tests clients
+			 for (var i = 1; i <= client; i++) {
+				
+				if($("#ClientDemand" + i).val() == ""){
+					erreur++;
+					alert("erreur Demande du client");
+				}
+				var regexTime= new RegExp('^(([0-1]){1,}([0-9]{1,})|(2[0-3]))(:)([0-5]{1}[0-9]{1})$');
+				if ((!($("#ClientTimeWindowMin" + i).val()).match(regexTime)) || (!($("#ClientTimeWindowMin" + i).val()).match(regexTime))) {
+					erreur++;
+					alert("Heure non conforme ( format hh:mm )");
+				}
+			 }
+			 
+			 //Si tests corrects
+			  if (erreur == 0) {
+				return;
+			  }
+			  
+			  //Quand tests non conformes
+			 
+			  event.preventDefault();
+			});
+		});
+      </script>
+    </body>
+</html>
